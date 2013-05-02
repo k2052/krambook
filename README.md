@@ -34,10 +34,9 @@ $ krambook -f includey
 The format for external files is:
 
 ```markdown
-
-~~~ ruby
+\~\~\~ ruby
 This will be replaced by an external file
-~~~
+\~\~\~
 {: .language-ruby include="external_file.rb"}
 ```
 
