@@ -27,7 +27,7 @@ module Krambook
 				files.each do |file_path|
 					full_file_path = File.expand_path './manuscript/' + file_path
 					f.puts Kramdown::Document.new(IO.read(full_file_path)).send("to_#{options[:format]}".to_sym) if File.exists?(full_file_path)
-					f.puts '' unless file_path = files.last
+					f.puts '' unless file_path == files.last
 				end
 			end
     end
