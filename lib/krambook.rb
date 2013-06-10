@@ -7,7 +7,7 @@ module Krambook
   class CLI < Thor
     include Thor::Actions
 
-    class_option :format, :desc => 'The format to convert to', :aliases => '-f', :default => 'kramdown', :type => :string
+    class_option :format, :desc => 'The format to convert to', :aliases => '-f', :default => nil, :type => :string
     class_option :help, :type => :boolean, :desc => 'Show help usage' 
     default_task :join
 
@@ -26,7 +26,13 @@ module Krambook
       File.open(joined_file_path, 'a') do |f|
         files.each do |file_path|
           full_file_path = File.expand_path './manuscript/' + file_path
-          f.puts Kramdown::Document.new(IO.read(full_file_path)).send("to_#{options[:format]}".to_sym) if File.exists?(full_file_path)
+          
+          if options[:format]
+            f.puts Kramdown::Document.new(IO.read(full_file_path)).send("to_#{options[:format]}".to_sym) if File.exists?(full_file_path)
+          else
+            f.puts IO.read(full_file_path) if File.exists?(full_file_path)
+          end
+
           f.puts '' unless file_path == files.last
         end
       end
